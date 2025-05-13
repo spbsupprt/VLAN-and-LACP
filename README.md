@@ -26,6 +26,9 @@ testClient2 <-> testServer2
 
 Дано:
 
+![image](https://github.com/user-attachments/assets/eaa5a5e8-8abf-4648-9ddb-91868b174152)
+
+
 ![image](https://github.com/user-attachments/assets/06fe42a6-2849-476d-8b3f-ed3ef1a97bf5)
 
 
