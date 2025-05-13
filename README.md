@@ -23,3 +23,13 @@ testClient2 <-> testServer2
 
 
 ---
+
+Дано:
+
+![image](https://github.com/user-attachments/assets/06fe42a6-2849-476d-8b3f-ed3ef1a97bf5)
+
+
+Выполним плейбук https://github.com/spbsupprt/VLAN-and-LACP/blob/main/lacp.yml
+
+
+![image](https://github.com/user-attachments/assets/c60984b3-0e23-45ac-bd76-7ca0ef82c474)
