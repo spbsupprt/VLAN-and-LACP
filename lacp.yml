@@ -1,0 +1,91 @@
+---
+# playbook.yml
+- name: Base setup for all hosts
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install packages on CentOS
+      yum:
+        name:
+          - vim
+          - traceroute
+          - tcpdump
+          - net-tools
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "RedHat"
+
+    - name: Install packages on Ubuntu
+      apt:
+        name:
+          - vim
+          - traceroute
+          - tcpdump
+          - net-tools
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+- name: Configure VLANs for testClient1 and testServer1
+  hosts: testClient1,testServer1
+  become: yes
+  tasks:
+    - name: Create VLAN1 configuration
+      template:
+        src: templates/ifcfg-vlan1.j2
+        dest: /etc/sysconfig/network-scripts/ifcfg-vlan1
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Restart NetworkManager
+      service:
+        name: NetworkManager
+        state: restarted
+
+- name: Configure VLANs for testClient2 and testServer2
+  hosts: testClient2,testServer2
+  become: yes
+  tasks:
+    - name: Create VLAN2 configuration
+      template:
+        src: templates/50-cloud-init.yaml.j2
+        dest: /etc/netplan/50-cloud-init.yaml
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Apply netplan configuration
+      command: netplan apply
+
+- name: Configure LACP bond between routers
+  hosts: inetRouter,centralRouter
+  become: yes
+  tasks:
+    - name: Create bond0 configuration
+      template:
+        src: templates/ifcfg-bond0.j2
+        dest: /etc/sysconfig/network-scripts/ifcfg-bond0
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Configure eth1 for bonding
+      copy:
+        src: templates/ifcfg-eth1
+        dest: /etc/sysconfig/network-scripts/ifcfg-eth1
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Configure eth2 for bonding
+      copy:
+        src: templates/ifcfg-eth2
+        dest: /etc/sysconfig/network-scripts/ifcfg-eth2
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Reboot hosts to apply bonding
+      reboot:
+        reboot_timeout: 3600
