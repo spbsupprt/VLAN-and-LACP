@@ -40,7 +40,7 @@ testClient2 <-> testServer2
 ### 1. Проверка VLAN между testClient1 и testServer1 (CentOS)
 
 ```
-[vagrant@testClient1 ~]$ ip a show eth1.1
+[root@testClient1 ~]$ ip a show eth1.1
 5: eth1.1@eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 08:00:27:cb:35:ae brd ff:ff:ff:ff:ff:ff
     inet 10.10.10.254/24 brd 10.10.10.255 scope global noprefixroute eth1.1
@@ -48,7 +48,7 @@ testClient2 <-> testServer2
     inet6 fe80::a00:27ff:fecb:35ae/64 scope link 
        valid_lft forever preferred_lft forever
 
-[vagrant@testClient1 ~]$ ping -c 4 10.10.10.1
+[root@testClient1 ~]$ ping -c 4 10.10.10.1
 PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
 64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.352 ms
 64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.283 ms
@@ -62,7 +62,7 @@ rtt min/avg/max/mdev = 0.283/0.302/0.352/0.028 ms
 ### 2. Проверка VLAN между testClient2 и testServer2 (Ubuntu)
 
 ```
-vagrant@testClient2:~$ ip a show vlan2
+root@testClient2:~$ ip a show vlan2
 4: vlan2@enp0s8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 08:00:27:cb:35:ae brd ff:ff:ff:ff:ff:ff
     inet 10.10.10.254/24 brd 10.10.10.255 scope global vlan2
@@ -70,7 +70,7 @@ vagrant@testClient2:~$ ip a show vlan2
     inet6 fe80::a00:27ff:fecb:35ae/64 scope link 
        valid_lft forever preferred_lft forever
 
-vagrant@testClient2:~$ ping -c 4 10.10.10.1
+root@testClient2:~$ ping -c 4 10.10.10.1
 PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
 64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.781 ms
 64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.643 ms
@@ -150,12 +150,12 @@ MII Status: up
 ### 4. Проверка изоляции VLAN
 
 ```
-[vagrant@testClient1 ~]$ ping -c 2 10.10.10.1
+[root@testClient1 ~]$ ping -c 2 10.10.10.1
 PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
 64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.352 ms
 64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.283 ms
 
-[vagrant@testClient1 ~]$ ping -c 2 10.10.10.254
+[root@testClient1 ~]$ ping -c 2 10.10.10.254
 PING 10.10.10.254 (10.10.10.254) 56(84) bytes of data.
 From 10.10.10.254 icmp_seq=1 Destination Host Unreachable
 From 10.10.10.254 icmp_seq=2 Destination Host Unreachable
