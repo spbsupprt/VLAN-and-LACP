@@ -1,5 +1,4 @@
 ---
-# playbook.yml
 - name: Base setup for all hosts
   hosts: all
   become: yes
